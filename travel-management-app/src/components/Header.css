@@ -1,0 +1,42 @@
+header {
+    background-color: white;
+    color: white;
+    padding: 20px 30px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;  
+    z-index: 10;  
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+  }
+  
+
+  nav {
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 20px; 
+  }
+  
+  nav a {
+    display: block; 
+    color: black;
+    padding: 10px 20px;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  
+  nav a:hover {
+    background-color: #444; 
+    transition: background-color 0.3s ease;
+  }
+
+  .header-text {
+    font-size: 30px; 
+    color: black; 
+    font-weight: bold;
+    margin-right: 40px;
+  }

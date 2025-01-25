@@ -1,0 +1,120 @@
+/* Genel body ve font stilleri */
+body {
+  font-family: Arial, sans-serif;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header stilini güncelle */
+header {
+  background-color: white;
+  padding: 20px;
+  color: black;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2em;
+}
+
+/* Formların çevresindeki kapsayıcı div */
+form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+/* Form alanlarına genel stil */
+form input,
+form select,
+form button {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Input ve select elemanlarına odaklanıldığında */
+form input:focus,
+form select:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+/* Çoklu seçim için stil */
+form select[multiple] {
+  height: 150px;  /* Yüksekliği ayarlayarak daha rahat görülebilir hale getirebiliriz */
+}
+
+/* Butonun stilini düzenle */
+form button {
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  margin-top: 10px;
+}
+
+form button:hover {
+  background-color: #444;
+}
+
+/* Etiketlerin (label) stilini düzenle */
+form label {
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Select elementlerinin altına biraz boşluk ekle */
+form select {
+  margin-bottom: 20px;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 600px) {
+  form {
+    padding: 15px;
+  }
+
+  form h2 {
+    font-size: 1.5em;
+  }
+
+  form input,
+  form select,
+  form button {
+    padding: 10px;
+  }
+}
+
+/* App.css */
+.App {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
