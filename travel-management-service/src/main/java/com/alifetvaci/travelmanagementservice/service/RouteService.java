@@ -29,43 +29,44 @@ public class RouteService {
 
         return convertRoutes(routes);
     }
+
     private void findRoutesDFS(String current, String destination, Set<String> visited,
                                List<Transportation> currentRoute, List<List<Transportation>> routes,
                                boolean flightFound, LocalDate date) {
 
-        // Eğer rota 3 taşıma aracından fazla olursa durduruyoruz
+        // Stop if the route has more than 3 modes of transportation
         if (currentRoute.size() > 3) return;
 
-        // Arka arkaya birden fazla uçuş kontrolü
+        // Check for consecutive flights
         long flightCount = currentRoute.stream()
                 .filter(t -> t.getTransportationType().equals(TransportationType.FLIGHT))
                 .count();
         if (flightCount > 1) return;
 
-        //Uçuş öncesi transfer sayısı sınırı kontrolü:
+        // Check the limit of transfers before the flight:
         long transfersBeforeFlight = currentRoute.stream()
                 .takeWhile(t -> !t.getTransportationType().equals(TransportationType.FLIGHT))
                 .count();
         if (flightCount == 0 && transfersBeforeFlight > 1) return;
 
-        //Uçuş sonrası transfer sayısı sınırı kontrolü:
+        // Check the limit of transfers after the flight:
         long transfersAfterFlight = currentRoute.stream()
                 .dropWhile(t -> !t.getTransportationType().equals(TransportationType.FLIGHT))
-                .skip(1) // Uçuşu atla
+                .skip(1) // Skip the flight itself
                 .count();
         if (flightFound && transfersAfterFlight > 1) return;
 
-        // Hedef lokasyona ulaştık ve bir uçuş var
+        // We've reached the destination and there is a flight
         if (current.equals(destination) && flightFound) {
             routes.add(new ArrayList<>(currentRoute));
             return;
         }
         visited.add(current);
-        // Mevcut lokasyondan gidebileceğimiz tüm taşıma araçlarını kontrol et
+        // Check all modes of transportation from the current location
         Map<String, Map<String, Transportation>> graph = transportGraphService.getTransportationGraph();
         Map<String, Transportation> adjacentLocations = graph.get(current);
 
-        // Eğer mevcut lokasyonun komşuları yoksa geri dön
+        // If the current location has no neighbors, return
         if (adjacentLocations == null) {
             visited.remove(current);
             return;
@@ -74,21 +75,22 @@ public class RouteService {
         for (Map.Entry<String, Transportation> entry : adjacentLocations.entrySet()) {
             String nextLocation = entry.getKey();
             Transportation transportation = entry.getValue();
-            // Eğer taşıma aracının çalıştığı günler arasında belirtilen tarih varsa, geçerli
+            // If the transportation operates on the specified date, it's valid
             if (!transportation.getOperatingDays().contains(date.getDayOfWeek().getValue())) {
                 continue;
             }
-            // Eğer zaten ziyaret ettiğimiz bir lokasyona gitmek istemiyorsak, onu atla
+            // Skip if we have already visited this location
             if (visited.contains(nextLocation)) continue;
-            // Eğer uçuş ise, uçuşu bulduk olarak işaretle
+            // If it's a flight, mark that a flight has been found
             boolean newFlightFound = flightFound || transportation.getTransportationType().equals(TransportationType.FLIGHT);
-            // Taşıma aracını rotaya ekle ve DFS çağır
+            // Add the transportation to the route and call DFS
             currentRoute.add(transportation);
             findRoutesDFS(nextLocation, destination, visited, currentRoute, routes, newFlightFound, date);
             currentRoute.remove(transportation);
         }
         visited.remove(current);
     }
+
 
     public List<List<TransportationResponse>> convertRoutes(List<List<Transportation>> routes) {
         return routes.stream()
