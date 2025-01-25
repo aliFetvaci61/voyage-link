@@ -1,0 +1,27 @@
+server:
+  port: 6180
+  servlet:
+    context-path: /travel-management-service
+spring:
+  application:
+    name: /travel-management-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://host.docker.internal:5432/postgres}
+    username: ${SPRING_DATASOURCE_USERNAME:user}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        default_schema: ${SPRING_DATASOURCE_SCHEMA_NAME:public}
+      jdbc:
+        time_zone: UTC
+    open-in-view: false
+
+service:
+  auth:
+    url: ${AUTH_SERVICE_BASE_URL:http://host.docker.internal:6190}
