@@ -1,49 +1,43 @@
-# voyage-link
-This project implements a system for the aviation industry, designed to calculate possible routes between locations. The system includes a backend REST API built with Spring Boot, utilizing Java 17, PostgreSQL for data storage, and Redis for caching. Additionally, Depth First Search (DFS) algorithm is used to calculate routes efficiently by storing node and edge information in a graph structure.
+## voyage-link
+  This project implements a system for the aviation industry, designed to calculate possible routes between locations. The system includes a backend REST API built with Spring Boot, utilizing Java 17, PostgreSQL for data storage, and Redis for caching. Additionally, Depth First Search (DFS) algorithm is used to calculate routes efficiently by storing node and edge information in a graph structure.
 
-![Uploading image.png…]()
+# Features
+- Locations Management: Create, Read, Update, Delete (CRUD) locations for airports, cities, and other locations.
+- Transportation Management: CRUD operations for transportation entities (e.g., FLIGHT, BUS, SUBWAY, UBER).
+- Route Calculation: Find valid routes between two locations considering transportation availability and transfer requirements.
+- Caching: Redis caching to optimize locations and transportations read performans.
+- Graph Representation: Uses Depth First Search (DFS) for efficient route traversal.
+- Swagger UI: API documentation available via Swagger for easy testing and exploration.
 
+# Technologies Used
+- Spring Boot - Java REST API framework
+- Java 17 - The programming language version
+- PostgreSQL - Relational database for storing locations, transportations, and routes
+- Redis - Caching mechanism to improve performance
+- Docker - Dockerized environment for development and deployment
+- Swagger UI - API documentation interface
+- Depth First Search (DFS) - Algorithm to efficiently calculate routes in the graph
+- Hibernate - ORM for database interaction
 
-Features
-Locations Management: Create, Read, Update, Delete (CRUD) locations for airports, cities, and other locations.
-Transportation Management: CRUD operations for transportation entities (e.g., FLIGHT, BUS, SUBWAY, UBER).
-Route Calculation: Find valid routes between two locations considering transportation availability and transfer requirements.
-Caching: Redis caching to optimize locations and transportations read performans.
-Graph Representation: Uses Depth First Search (DFS) for efficient route traversal.
-Swagger UI: API documentation available via Swagger for easy testing and exploration.
+# Requirements
+- Java 17
+- PostgreSQL Database
+- Redis Server
+- Docker (for running the application in containers)
 
-Technologies Used
-Spring Boot - Java REST API framework
-Java 17 - The programming language version
-PostgreSQL - Relational database for storing locations, transportations, and routes
-Redis - Caching mechanism to improve performance
-Docker - Dockerized environment for development and deployment
-Swagger UI - API documentation interface
-Depth First Search (DFS) - Algorithm to efficiently calculate routes in the graph
-Hibernate - ORM for database interaction
+# Software Architecture Design for voyage-link
+![image](https://github.com/user-attachments/assets/3d91f3ec-4132-43d0-b5d5-881afe3dfb40)
 
-Requirements
-Java 17
-PostgreSQL Database
-Redis Server
-Docker (for running the application in containers)
-
-How to Run the Application
-
-Clone the Repository
-git clone https://github.com/yourusername/aviation-route-management.git
-cd voyage-link
-docker-compose up --build
-
-Swagger UI: http://localhost:6170/auth-service/swagger-ui/index.html
-Swagger UI: http://localhost:6180/travel-management-service/swagger-ui/index.html
+## How to Run the Application
+- git clone https://github.com/yourusername/aviation-route-management.git
+- cd voyage-link
+- docker-compose up --build
 
 Frontend (React)
-To start the frontend React application:
-
-cd travel-management-web-app
-npm install
-npm start
+- cd travel-management-web-app
+- npm install
+- npm start
+  
 The React app will run on http://localhost:3000. It includes the following pages:
 User: Register, Login
 Locations: List, create, update, and delete locations.
