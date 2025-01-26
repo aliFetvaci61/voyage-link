@@ -1,0 +1,83 @@
+version: '3'
+services:
+  postgres-db:
+    image: 'postgres:13.1-alpine'
+    ports:
+      - "5432:5432"
+
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password 
+      POSTGRES_DB: postgres 
+    volumes:
+      - ./postgresql:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - my-network
+
+
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass password
+    networks:
+      - my-network
+
+  #auth-service config
+  auth-service:
+    container_name: auth-service
+    image: auth-service
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "6170:6170"
+    volumes:
+      - $HOME/app:/var/app
+    depends_on:
+      - postgres-db
+      - cache
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/postgres?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SECURITY_JWT_SECRET_KEY=3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+      - SECURITY_JWT_EXPIRATION_TIME:300000
+
+  #travel-management-service config
+  travel-management-service:
+    container_name: travel-management-service
+    image: travel-management-service
+    build:
+      context: ./travel-management-service
+      dockerfile: Dockerfile
+    ports:
+      - "6180:6180"
+    volumes:
+      - $HOME/app:/var/app
+    depends_on:
+      - postgres-db
+      - cache
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/postgres?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+
+  #gateway config
+  gateway:
+    container_name: gateway
+    image: gateway
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - "6161:6161"
+    volumes:
+      - $HOME/app:/var/app
+    depends_on:
+      - cache
+
+
+networks:
+  my-network:

@@ -21,10 +21,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
-        default_schema: ${SPRING_DATASOURCE_SCHEMA_NAME:public}
+        default_schema: ${SPRING_DATASOURCE_SCHEMA_NAME:voyage_link_auth}
       jdbc:
         time_zone: UTC
     open-in-view: false

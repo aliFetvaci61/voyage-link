@@ -13,25 +13,107 @@ spring:
       password: ${SPRING_REDIS_PASSWORD:password}
   cloud:
     gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - OPTIONS
+              - PUT
       routes:
         - id: register-user
           uri: ${AUTH_SERVICE_BASE_URL:http://host.docker.internal:6170}
           predicates:
-            - Path=/user-service/api/v1/register
+            - Path=/auth-service/api/v1/register
             - Method=POST
           metadata:
             tokenRequired: false
         - id: login-user
           uri: ${AUTH_SERVICE_BASE_URL:http://host.docker.internal:6170}
           predicates:
-            - Path=/user-service/api/v1/login
+            - Path=/auth-service/api/v1/login
             - Method=POST
           metadata:
             tokenRequired: false
-        - id: create-credit
-          uri: ${VOYAGE_LINK_SERVICE_BASE_URL:http://host.docker.internal:6180}
+        - id: read-locations
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://host.docker.internal:6180}
           predicates:
-            - Path=/credit-service/api/v1/credit
+            - Path=/travel-management-service/api/v1/location
+            - Method=GET
+          metadata:
+            tokenRequired: true
+        - id: read-location
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://host.docker.internal:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/location/{id}
+            - Method=GET
+          metadata:
+            tokenRequired: true
+        - id: create-location
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://host.docker.internal:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/location
             - Method=POST
+          metadata:
+            tokenRequired: true
+        - id: update-location
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://host.docker.internal:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/location/{id}
+            - Method=PUT
+          metadata:
+            tokenRequired: true
+        - id: delete-location
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://host.docker.internal:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/location/{id}
+            - Method=DELETE
+          metadata:
+            tokenRequired: true
+        - id: read-transportations
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://host.docker.internal:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/transportation
+            - Method=GET
+          metadata:
+            tokenRequired: true
+        - id: read-transportation
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://host.docker.internal:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/transportation/{id}
+            - Method=GET
+          metadata:
+            tokenRequired: true
+        - id: create-transportation
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://host.docker.internal:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/transportation
+            - Method=POST
+          metadata:
+            tokenRequired: true
+        - id: update-transportation
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://host.docker.internal:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/transportation/{id}
+            - Method=PUT
+          metadata:
+            tokenRequired: true
+        - id: delete-transportation
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://host.docker.internal:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/transportation/{id}
+            - Method=DELETE
+          metadata:
+            tokenRequired: true
+        - id: get-routes
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://host.docker.internal:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/routes
+            - Method=GET
           metadata:
             tokenRequired: true
