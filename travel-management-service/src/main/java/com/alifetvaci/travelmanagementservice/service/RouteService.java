@@ -25,14 +25,18 @@ public class RouteService {
         List<List<Transportation>> routes = new ArrayList<>();
         Set<String> visited = new HashSet<>();
 
-        findRoutesDFS(from, to, visited, new ArrayList<>(), routes, false, date);
+        // Transport graph is fetched once and passed to DFS
+        Map<String, Map<String, Transportation>> graph = transportGraphService.getTransportationGraph();
+
+        findRoutesDFS(from, to, visited, new ArrayList<>(), routes, false, date, graph);
 
         return convertRoutes(routes);
     }
 
     private void findRoutesDFS(String current, String destination, Set<String> visited,
                                List<Transportation> currentRoute, List<List<Transportation>> routes,
-                               boolean flightFound, LocalDate date) {
+                               boolean flightFound, LocalDate date,
+                               Map<String, Map<String, Transportation>> graph) {
 
         // Stop if the route has more than 3 modes of transportation
         if (currentRoute.size() > 3) return;
@@ -62,8 +66,8 @@ public class RouteService {
             return;
         }
         visited.add(current);
+
         // Check all modes of transportation from the current location
-        Map<String, Map<String, Transportation>> graph = transportGraphService.getTransportationGraph();
         Map<String, Transportation> adjacentLocations = graph.get(current);
 
         // If the current location has no neighbors, return
@@ -85,7 +89,7 @@ public class RouteService {
             boolean newFlightFound = flightFound || transportation.getTransportationType().equals(TransportationType.FLIGHT);
             // Add the transportation to the route and call DFS
             currentRoute.add(transportation);
-            findRoutesDFS(nextLocation, destination, visited, currentRoute, routes, newFlightFound, date);
+            findRoutesDFS(nextLocation, destination, visited, currentRoute, routes, newFlightFound, date, graph);
             currentRoute.remove(transportation);
         }
         visited.remove(current);

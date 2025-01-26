@@ -10,6 +10,9 @@ import lombok.experimental.UtilityClass;
     public class Utils {
 
         public static LocationResponse mapToLocationResponse(Location location) {
+            if (location == null) {
+                throw new IllegalArgumentException("Location cannot be null");
+            }
             return LocationResponse.builder()
                     .id(location.getId())
                     .name(location.getName())
@@ -20,6 +23,9 @@ import lombok.experimental.UtilityClass;
         }
 
         public static TransportationResponse mapToTransportationResponse(Transportation transportation) {
+            if (transportation == null) {
+                throw new IllegalArgumentException("Transportation cannot be null");
+            }
             return TransportationResponse.builder()
                     .id(transportation.getId())
                     .originLocation(mapToLocationResponse(transportation.getOriginLocation()))

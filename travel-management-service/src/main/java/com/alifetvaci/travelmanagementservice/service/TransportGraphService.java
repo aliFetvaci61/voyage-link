@@ -1,8 +1,6 @@
 package com.alifetvaci.travelmanagementservice.service;
 
-import com.alifetvaci.travelmanagementservice.repository.LocationRepository;
 import com.alifetvaci.travelmanagementservice.repository.TransportationRepository;
-import com.alifetvaci.travelmanagementservice.repository.model.Location;
 import com.alifetvaci.travelmanagementservice.repository.model.Transportation;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +14,11 @@ public class TransportGraphService {
 
     public static Map<String, Map<String, Transportation>> graph;
 
-    private final LocationRepository locationRepository;
-
     private final TransportationRepository transportationRepository;
 
     public Map<String, Map<String, Transportation>> buildGraph() {
         Map<String, Map<String, Transportation>> graph = new HashMap<>();
-        // 1. Get the locations
-        List<Location> locations = locationRepository.findAll();
-        // 2. Place each transportation vehicle
+        // 1. Place each transportation vehicle
         List<Transportation> transportations = transportationRepository.findAll();
 
         for (Transportation transportation : transportations) {
@@ -41,7 +35,7 @@ public class TransportGraphService {
         return graph;
     }
 
-    @Scheduled(cron = "0 0/3 * * * *")
+    @Scheduled(cron = "0/10 * * * * *")
     public void scheduleBuildGraph() {
         graph = buildGraph();
     }
