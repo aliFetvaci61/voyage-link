@@ -78,6 +78,18 @@ services:
     depends_on:
       - cache
 
+  #web-app config   
+  web-app:
+    build:
+      context: ./travel-management-web-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"  
+    environment:
+      - NODE_ENV=production  
+    env_file:
+      - ./travel-management-web-app/src/.env
+
 
 networks:
   my-network:
