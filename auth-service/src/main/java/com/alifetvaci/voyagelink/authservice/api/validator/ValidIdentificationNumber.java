@@ -10,12 +10,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Documented
-@Constraint(validatedBy = ValidNameValidator.class)
+@Constraint(validatedBy = ValidIdentificationNumberValidator.class)
 @Target({ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidName {
+public @interface ValidIdentificationNumber {
 
-    String message() default "Invalid Name Character";
+    String message() default "Invalid Identification Number";
 
     Class<?>[] groups() default {};
 

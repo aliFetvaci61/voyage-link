@@ -20,13 +20,13 @@ public class UserController extends BaseController {
    private final UserService service;
 
     @PostMapping("api/v1/register")
-    public BaseApiResponse<Void> registerUser(@RequestBody  @Valid RegisterRequest request) {
+    public BaseApiResponse<Void> registerUser(@Valid @RequestBody RegisterRequest request) {
         service.register(request);
         return success(null);
     }
 
     @PostMapping("api/v1/login")
-    public BaseApiResponse<LoginResponse> loginUser(@RequestBody  @Valid LoginRequest request) {
+    public BaseApiResponse<LoginResponse> loginUser(@Valid @RequestBody LoginRequest request) {
         return success(service.login(request));
     }
 

@@ -28,7 +28,7 @@ public class TransportationController extends BaseController {
     private final TransportationService service;
 
     @PostMapping("/v1/transportation")
-    public BaseApiResponse<TransportationResponse> createTransportation(@RequestBody @Valid TransportationRequest request) {
+    public BaseApiResponse<TransportationResponse> createTransportation(@Valid @RequestBody TransportationRequest request) {
         return success(service.createTransportation(request));
     }
 
@@ -43,7 +43,7 @@ public class TransportationController extends BaseController {
     }
 
     @PutMapping("/v1/transportation/{id}")
-    public BaseApiResponse<TransportationResponse> updateTransportation(@PathVariable(value="id") Long id, @RequestBody  @Valid TransportationRequest request) {
+    public BaseApiResponse<TransportationResponse> updateTransportation(@PathVariable(value="id") Long id, @Valid @RequestBody   TransportationRequest request) {
         return success(service.updateTransportation(id, request));
     }
 

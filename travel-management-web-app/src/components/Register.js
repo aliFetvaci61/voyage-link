@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import api from '../services/axios';
 import Toast from './Toast';  
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [identificationNumber, setIdentificationNumber] = useState('');
@@ -8,6 +9,7 @@ function Register() {
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [toast, setToast] = useState(null); 
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +21,7 @@ function Register() {
         password
       });
       showToast('Registration successful', 'success');
+      navigate('/locations');
     } catch (err) {
       showToast('Registration failed !', 'error');
     }

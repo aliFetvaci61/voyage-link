@@ -30,6 +30,14 @@ public class TransportationService {
 
     public TransportationResponse createTransportation(TransportationRequest transportationRequest) {
 
+        transportationRepository.findByOriginLocation_IdAndDestinationLocation_IdAndTransportationType(transportationRequest.getOriginLocationId(),transportationRequest.getDestinationLocationId(),transportationRequest.getTransportationType())
+                .ifPresent(location -> {
+                    throw GenericException.builder()
+                            .httpStatus(HttpStatus.BAD_REQUEST)
+                            .logMessage(ErrorCode.TRANSPORTATION_ALREADY_EXISTS.getMessage())
+                            .build();
+                });
+
         Location originLocation = locationRepository.findById(transportationRequest.getOriginLocationId())
                 .orElseThrow(() -> GenericException.builder()
                         .httpStatus(HttpStatus.NOT_FOUND)

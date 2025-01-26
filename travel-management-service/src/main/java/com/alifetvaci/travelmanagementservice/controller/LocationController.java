@@ -27,7 +27,7 @@ public class LocationController extends BaseController {
     private final LocationService service;
 
     @PostMapping("/v1/location")
-    public BaseApiResponse<LocationResponse> createLocation(@RequestBody @Valid LocationRequest request) {
+    public BaseApiResponse<LocationResponse> createLocation(@Valid @RequestBody LocationRequest request) {
         return success(service.createLocation(request));
     }
 
@@ -43,7 +43,7 @@ public class LocationController extends BaseController {
 
 
     @PutMapping("/v1/location/{id}")
-    public BaseApiResponse<LocationResponse> updateLocation(@PathVariable(value="id") Long id, @RequestBody  @Valid LocationRequest request) {
+    public BaseApiResponse<LocationResponse> updateLocation(@PathVariable(value="id") Long id, @Valid @RequestBody   LocationRequest request) {
         return success(service.updateLocation(id, request));
     }
 

@@ -25,6 +25,15 @@ public class LocationService {
     private final LocationRepository locationRepository;
 
     public LocationResponse createLocation(LocationRequest locationRequest) {
+
+        locationRepository.findByLocationCode(locationRequest.getLocationCode())
+                .ifPresent(location -> {
+                    throw GenericException.builder()
+                            .httpStatus(HttpStatus.BAD_REQUEST)
+                            .logMessage(ErrorCode.LOCATION_ALREADY_EXISTS.getMessage())
+                            .build();
+                });
+
         Location location = Location.builder()
                 .name(locationRequest.getName())
                 .country(locationRequest.getCountry())
