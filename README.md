@@ -51,6 +51,14 @@ Depth First Search (DFS) for Route Calculation
 Every 10 seconds, the system updates its graph representation in memory, ensuring fast and efficient route calculations.
 The DFS algorithm is employed to find all possible routes between origin and destination, adhering to the rules for valid routes (e.g., no more than three transportations, one flight, etc.).
 
-Conclusion
+## Conclusion
 This system aims to provide an efficient and user-friendly way to calculate routes between locations in the aviation industry. With the use of in memory access, Depth First Search (DFS) algorithm for graph traversal, and a responsive frontend built in React, this solution ensures a seamless experience for users booking flights.
+
+## Contributing
+
+- Fork the project.
+- Create a new branch: git checkout -b new-feature
+- Make your changes and commit them: git commit -am 'Add new feature'
+- Push to the branch: git push origin new-feature
+- Create a new Pull Request.
 
