@@ -11,6 +11,9 @@ import com.alifetvaci.travelmanagementservice.repository.model.Transportation;
 import com.alifetvaci.travelmanagementservice.service.util.Utils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +59,7 @@ public class TransportationService {
                 .toList();
     }
 
+    @Cacheable(value = "transportations", key = "#id")
     public TransportationResponse getTransportationById(Long id) {
         Transportation transportation = transportationRepository.findById(id)
                 .orElseThrow(() -> GenericException.builder()
@@ -67,6 +71,7 @@ public class TransportationService {
     }
 
     @Transactional
+    @CachePut(value = "transportations", key = "#id")
     public TransportationResponse updateTransportation(Long id, TransportationRequest transportationRequest) {
         Transportation transportation = transportationRepository.findById(id)
                 .orElseThrow(() -> GenericException.builder()
@@ -94,6 +99,7 @@ public class TransportationService {
         return mapToTransportationResponse(saved);
     }
 
+    @CacheEvict(value = "transportations", key = "#id")
     public void deleteTransportation(Long id) {
         if (transportationRepository.existsById(id)) {
             transportationRepository.deleteById(id);

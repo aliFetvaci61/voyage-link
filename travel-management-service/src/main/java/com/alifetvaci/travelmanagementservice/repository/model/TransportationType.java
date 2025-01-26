@@ -1,6 +1,11 @@
 package com.alifetvaci.travelmanagementservice.repository.model;
 
-public enum TransportationType {
+import lombok.Getter;
+
+import java.io.Serializable;
+
+@Getter
+public enum TransportationType implements Serializable {
     FLIGHT("Flight"),
     BUS("Bus"),
     SUBWAY("Subway"),
@@ -12,7 +17,4 @@ public enum TransportationType {
         this.displayName = displayName;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
 }

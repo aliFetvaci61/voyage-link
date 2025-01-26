@@ -16,7 +16,7 @@ public class GlobalExceptionHandler extends BaseController {
 
         BaseApiResponse<?> response = new BaseApiResponse<>();
         response.setSuccess(false);
-        response.setMessage(ex.getErrorCode().getMessage());
+        response.setMessage(ex.getLogMessage());
         return response;
     }
 

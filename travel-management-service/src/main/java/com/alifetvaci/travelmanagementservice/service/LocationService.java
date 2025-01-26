@@ -10,6 +10,9 @@ import com.alifetvaci.travelmanagementservice.repository.model.Location;
 import com.alifetvaci.travelmanagementservice.service.util.Utils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +44,7 @@ public class LocationService {
                 .toList();
     }
 
+    @Cacheable(value = "locations", key = "#id")
     public LocationResponse getLocationById(Long id) {
         Location location = locationRepository.findById(id)
                 .orElseThrow(() -> GenericException.builder()
@@ -52,6 +56,7 @@ public class LocationService {
     }
 
     @Transactional
+    @CachePut(value = "locations", key = "#id")
     public LocationResponse updateLocation(Long id, LocationRequest locationRequest) {
         Location existingLocation = locationRepository.findById(id)
                 .orElseThrow(() -> GenericException.builder()
@@ -69,6 +74,7 @@ public class LocationService {
     }
 
 
+    @CacheEvict(value = "locations", key = "#id")
     public void deleteLocation(Long id) {
         if (locationRepository.existsById(id)) {
             locationRepository.deleteById(id);

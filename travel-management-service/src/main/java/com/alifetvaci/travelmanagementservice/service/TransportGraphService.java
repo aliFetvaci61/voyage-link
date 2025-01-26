@@ -22,20 +22,20 @@ public class TransportGraphService {
 
     public Map<String, Map<String, Transportation>> buildGraph() {
         Map<String, Map<String, Transportation>> graph = new HashMap<>();
-        // 1. Lokasyonları al
+        // 1. Get the locations
         List<Location> locations = locationRepository.findAll();
-        // 2. Her bir taşıma aracını yerleştir
+        // 2. Place each transportation vehicle
         List<Transportation> transportations = transportationRepository.findAll();
 
         for (Transportation transportation : transportations) {
 
             String originCode = transportation.getOriginLocation().getLocationCode();
             String destinationCode = transportation.getDestinationLocation().getLocationCode();
-            // Eğer origin lokasyonu daha önce eklenmediyse, yeni bir map oluştur
+            // If the origin location has not been added before, create a new map
             if (!graph.containsKey(originCode)) {
                 graph.put(originCode, new HashMap<>());
             }
-            // Origin lokasyonu için, destination lokasyonuna giden taşıma aracını ekle
+            // For the origin location, add the transportation vehicle to the destination location
             graph.get(originCode).put(destinationCode, transportation);
         }
         return graph;

@@ -5,6 +5,11 @@ server:
 spring:
   application:
     name: /travel-management-service
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST:host.docker.internal}
+      port: ${SPRING_REDIS_PORT:6379}
+      password: ${SPRING_REDIS_PASSWORD:password}
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://host.docker.internal:5432/postgres}
     username: ${SPRING_DATASOURCE_USERNAME:user}
