@@ -29,7 +29,7 @@
 ![image](https://github.com/user-attachments/assets/3d91f3ec-4132-43d0-b5d5-881afe3dfb40)
 
 ## How to Run the Application
-- git clone https://github.com/yourusername/aviation-route-management.git
+- git clone [https://github.com/yourusername/aviation-route-management.git](https://github.com/aliFetvaci61/voyage-link.git)
 - cd voyage-link
 - docker-compose up --build
 
