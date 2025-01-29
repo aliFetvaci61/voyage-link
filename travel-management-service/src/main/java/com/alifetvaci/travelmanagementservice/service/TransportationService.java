@@ -78,7 +78,6 @@ public class TransportationService {
         return mapToTransportationResponse(transportation);
     }
 
-    @Transactional
     @CachePut(value = "transportations", key = "#id")
     public TransportationResponse updateTransportation(Long id, TransportationRequest transportationRequest) {
         Transportation transportation = transportationRepository.findById(id)

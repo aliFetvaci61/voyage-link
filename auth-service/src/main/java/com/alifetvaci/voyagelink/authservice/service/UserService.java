@@ -1,7 +1,6 @@
 package com.alifetvaci.voyagelink.authservice.service;
 
 
-import com.alifetvaci.voyagelink.authservice.api.exception.ErrorCode;
 import com.alifetvaci.voyagelink.authservice.api.exception.GenericException;
 import com.alifetvaci.voyagelink.authservice.controller.request.LoginRequest;
 import com.alifetvaci.voyagelink.authservice.controller.request.RegisterRequest;

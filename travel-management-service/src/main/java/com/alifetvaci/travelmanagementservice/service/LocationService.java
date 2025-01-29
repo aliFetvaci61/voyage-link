@@ -64,7 +64,6 @@ public class LocationService {
         return Utils.mapToLocationResponse(location);
     }
 
-    @Transactional
     @CachePut(value = "locations", key = "#id")
     public LocationResponse updateLocation(Long id, LocationRequest locationRequest) {
         Location existingLocation = locationRepository.findById(id)

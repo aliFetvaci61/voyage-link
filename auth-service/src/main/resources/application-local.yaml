@@ -27,7 +27,6 @@ spring:
         default_schema: ${SPRING_DATASOURCE_SCHEMA_NAME:voyage_link_auth}
       jdbc:
         time_zone: UTC
-    open-in-view: false
 
 security:
   jwt:
