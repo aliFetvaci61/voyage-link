@@ -1,0 +1,124 @@
+server:
+  port: 6161
+
+security:
+  jwt:
+    secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+
+spring:
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST:localhost}
+      port: ${SPRING_REDIS_PORT:6379}
+      password: ${SPRING_REDIS_PASSWORD:password}
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - OPTIONS
+              - PUT
+      routes:
+        - id: register-user
+          uri: ${AUTH_SERVICE_BASE_URL:http://localhost:6170}
+          predicates:
+            - Path=/auth-service/api/v1/register
+            - Method=POST
+          metadata:
+            tokenRequired: false
+        - id: login-user
+          uri: ${AUTH_SERVICE_BASE_URL:http://localhost:6170}
+          predicates:
+            - Path=/auth-service/api/v1/login
+            - Method=POST
+          metadata:
+            tokenRequired: false
+        - id: read-locations
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://localhost:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/location
+            - Method=GET
+          metadata:
+            tokenRequired: true
+        - id: read-location
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://localhost:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/location/{id}
+            - Method=GET
+          metadata:
+            tokenRequired: true
+        - id: create-location
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://localhost:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/location
+            - Method=POST
+          metadata:
+            tokenRequired: true
+        - id: update-location
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://localhost:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/location/{id}
+            - Method=PUT
+          metadata:
+            tokenRequired: true
+        - id: delete-location
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://localhost:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/location/{id}
+            - Method=DELETE
+          metadata:
+            tokenRequired: true
+        - id: read-transportations
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://localhost:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/transportation
+            - Method=GET
+          metadata:
+            tokenRequired: true
+        - id: read-transportation
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://localhost:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/transportation/{id}
+            - Method=GET
+          metadata:
+            tokenRequired: true
+        - id: create-transportation
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://localhost:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/transportation
+            - Method=POST
+          metadata:
+            tokenRequired: true
+        - id: update-transportation
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://localhost:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/transportation/{id}
+            - Method=PUT
+          metadata:
+            tokenRequired: true
+        - id: delete-transportation
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://localhost:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/transportation/{id}
+            - Method=DELETE
+          metadata:
+            tokenRequired: true
+        - id: get-routes
+          uri: ${TRAVEL_MANAGEMENT_SERVICE_BASE_URL:http://localhost:6180}
+          predicates:
+            - Path=/travel-management-service/api/v1/routes
+            - Method=GET
+          metadata:
+            tokenRequired: true
+
+
+
+
+
